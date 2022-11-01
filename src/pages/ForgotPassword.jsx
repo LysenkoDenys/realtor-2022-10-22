@@ -28,9 +28,9 @@ export default function ForgotPassword() {
               onChange={onChange}
               placeholder="Email address"
             />
-            <div className="relative" mb-6></div>
+            <div className="relative mb-6"></div>
             <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
-              <p className="mb-6 ">
+              <p className="mb-6">
                 Don`t have an account?
                 <Link
                   to="/sign-up"

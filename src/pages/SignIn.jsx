@@ -37,7 +37,7 @@ export default function SignIn() {
               onChange={onChange}
               placeholder="Email address"
             />
-            <div className="relative" mb-6>
+            <div className="relative mb-6">
               <input
                 className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
                 type={showPassword ? "text" : "password"}
@@ -59,7 +59,7 @@ export default function SignIn() {
               )}
             </div>
             <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
-              <p className="mb-6 ">
+              <p className="mb-6">
                 Don`t have an account?
                 <Link
                   to="/sign-up"
