@@ -41,13 +41,15 @@ export default function SignUp() {
       });
       const user = userCredential.user;
       const formDataCopy = { ...formData };
-      delete formData.password;
+      delete formDataCopy.password;
       formDataCopy.timestamp = serverTimestamp();
       await setDoc(doc(db, "users", user.uid), formDataCopy);
       // toast.success("Sign up was successful");
       navigate("/");
     } catch (error) {
-      toast.error("Something went wrong with the registration");
+      toast.error(
+        "Something went wrong with the registration: check your name, email and password"
+      );
     }
   }
   return (
