@@ -2,13 +2,15 @@ import React from "react";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import { MdLocationOn } from "react-icons/md";
+import { CgTrash } from "react-icons/cg";
+import { RiEdit2Fill } from "react-icons/ri";
 
-const ListingItem = ({ listing, id }) => {
+const ListingItem = ({ listing, id, onEdit, onDelete }) => {
   return (
-    <li className="realative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounde-md overflow-hidden transition-shadow duration-150 m-[10px]">
+    <li className="relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-[10px] ">
       <Link className="contents" to={`/category/${listing.type}/${id}`}>
         <img
-          className="h-[170px] w-full object-cover hover:scale-105 transition-scale duration-200 ease-in"
+          className="h-[170px] w-full object-cover hover:scale-105 transition-scale duration-200 ease-in-out"
           loading="lazy"
           src={listing.imgUrls[0]}
           alt="estate"
@@ -54,6 +56,18 @@ const ListingItem = ({ listing, id }) => {
           </div>
         </div>
       </Link>
+      {onDelete && (
+        <CgTrash
+          className="absolute bottom-2 right-2 h-[16px] cursor-pointer text-red-600"
+          onClick={() => onDelete(listing.id)}
+        />
+      )}
+      {onEdit && (
+        <RiEdit2Fill
+          className="absolute bottom-2 right-7 h-[16px] cursor-pointer"
+          onClick={() => onEdit(listing.id)}
+        />
+      )}
     </li>
   );
 };
