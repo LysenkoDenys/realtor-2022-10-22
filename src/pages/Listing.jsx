@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { addDoc, doc, Firestore, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import Spinner from "../components/Spinner";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -19,12 +19,17 @@ import {
   FaParking,
   FaChair,
 } from "react-icons/fa";
+import { getAuth } from "firebase/auth";
+import Contact from "../components/Contact";
+import { Component } from "react";
 
 const Listing = () => {
   const params = useParams();
+  const auth = getAuth();
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
+  const [contactLandlord, setContactLandlord] = useState(false);
   SwiperCore.use([Autoplay, Navigation, Pagination]);
   useEffect(() => {
     async function fetchListing() {
@@ -82,7 +87,7 @@ const Listing = () => {
       {/* main block 'flex-col md:flex-row' - for middle size it turns into row*/}
       <div className="m-4 p-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto rounded-lg shadow-lg bg-white lg:space-x-5">
         {/* text */}
-        <div className="w-full h-[200px] lg-[400px]">
+        <div className="w-full">
           <p className="text-2xl font-bold mb-3 text-blue-900">
             {listing.name}-$
             {listing.offer
@@ -112,7 +117,7 @@ const Listing = () => {
             <span className="font-semibold">Description:</span>{" "}
             {listing.description}
           </p>
-          <ul className="flex items-center space-x-2 sm:space-x-10 text-sm font-semibold">
+          <ul className="flex items-center space-x-2 sm:space-x-10 text-sm font-semibold mb-6">
             <li className="flex items-center whitespace-nowrap ">
               <FaBed className="text-lg mr-1" />
               {+listing.bedrooms > 1 ? `${+listing.bedrooms} Beds` : "1 Bed"}
@@ -132,6 +137,21 @@ const Listing = () => {
               {+listing.furnished ? "Furnished" : "Not furnished"}
             </li>
           </ul>
+          {/* ? - protect us from fast loading page */}
+          {listing.userRef !== auth.currentUser?.uid && !contactLandlord && (
+            <div className="mt-6">
+              <button
+                onClick={() => setContactLandlord(true)}
+                className="px-7 py-3 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full text-center transition duration-150 ease-in-out"
+              >
+                Contact Landlord
+              </button>
+            </div>
+          )}
+          {contactLandlord && (
+            // !Component does not execute:
+            <Contact userRef={listing.userRef} listing={listing} />
+          )}
         </div>
         {/* map */}
         <div className="bg-blue-300 w-full h-[200px] lg-[400px] z-10 overflow-x-hidden "></div>
