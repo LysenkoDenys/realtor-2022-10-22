@@ -14,3 +14,12 @@ body {
   /* we overwriting existing CSS styles so we should write: "!important"*/
   background: #a8dadc !important;
 }
+
+/* remove scrollbar from CHROME: */
+html::-webkit-scrollbar {
+  display: none;
+}
+/* remove scrollbar from FIREFOX: */
+html {
+  scrollbar-width: none;
+}
