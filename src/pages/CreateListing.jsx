@@ -427,8 +427,9 @@ const CreateListing = () => {
         )}
         <div className="mb-6">
           <p className="text-lg font-semibold">Images</p>
-          <p className="text-gray-600">
-            The first image will be the cover (max 6)
+          <p className="text-gray-600 text-xs">
+            The first image will be the cover (max 6 images, max 2mb, prefer
+            1080p)
           </p>
           <input
             type="file"
